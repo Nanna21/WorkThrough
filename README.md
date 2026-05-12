@@ -37,16 +37,16 @@
 
 ## 🤝 6. 팀 규칙 및 역할 분담
 ### 📌 팀 규칙
-* **소통 채널:** (예: 디스코드)
-* **정기 회의:** (예: 매주 목요일 오후 6시)
-* **Git Commit 룰:** `feat:`(기능), `fix:`(버그), `docs:`(문서), `design:`(UI) 사용
-* **리뷰 룰:** `main` 브랜치 병합 전 최소 1명 이상 승인 필요
+* **소통 채널:** 디스코드
+* **정기 회의:** 매주 목요일 12시
+* **Git Commit 룰:** `feat:`(기능), `fix:`(버그)
+* **리뷰 룰:** `main` 브랜치 병합 전 팀원들의 의견 수용 후 팀장의 최종 승인
 
 ### 👥 팀원 역할
-* **PM (Product Manager):** []
-* **Tech Lead:** [이름]
-* **UI/UX Designer:** [이름]
-* **QA Engineer:** [이름]
-* **Scrum Master:** [이름]
-* **Tech Writer:** [이름]
-* **DevRel (Presenter):** [이름]
+* **PM (Product Manager):** [지윤환]
+* **Tech Lead:** [지윤환, 김찬희, 강태현]
+* **UI/UX Designer:** [김지현, 최율찬]
+* **QA Engineer:** [이나경]
+* **Scrum Master:** [지윤환]
+* **Tech Writer:** [이나경]
+* **DevRel (Presenter):** [김찬희, 최율찬]
