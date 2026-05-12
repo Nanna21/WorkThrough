@@ -30,7 +30,7 @@
 
 
 ## 5.기술 스택 및 아키텍처
-언어: HTML5, CSS3, JavaScript,
+언어: HTML5, CSS3, JavaScript
 스타일링: vanilla, Adobe Illustrator
 버전 관리 및 배포: Git, GitHub, GitHub Pages
 기획 도구: Figma, Notion
