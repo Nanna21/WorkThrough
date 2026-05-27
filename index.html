@@ -1,19 +1,100 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>워크쓰루 - 4분할 화면</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>워크쓰루 (Work Through)</title>
     <link rel="stylesheet" href="wt.css">
 </head>
-<body>
-    <div class="workspace" id="workspace">
-        <!-- 4개의 화면 -->
-        <div class="pane tl"><iframe src="https://www.openstreetmap.org/export/embed.html?bbox=126.96%2C37.55%2C126.99%2C37.58&layer=mapnik" title="YouTube Playlist"></iframe></div>
-        <div class="pane tr"><iframe src="https://s.tradingview.com/widgetembed/?symbol=NASDAQ%3AAAPL" title="Top Right"></iframe></div>
-        <div class="pane bl"><iframe src="https://www.youtube.com/embed/3kUFNhXF9SU?si=JJKDZLQNAp8DzvCJ" title="Bottom Left"></iframe></div>
-        <div class="pane br"><iframe src="https://example.com" title="Bottom Right"></iframe></div>
 
-        <!-- 크기 조절 바 -->
+<body>
+    <div class="controls">
+        <span class="logo">Work Through</span>
+        <div class="layout-buttons">
+            <button onclick="changeLayout('layout-2')">2분할</button>
+            <button onclick="changeLayout('layout-3')">3분할</button>
+            <button onclick="changeLayout('layout-4')">4분할</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="widget-dock">
+            <span class="dock-title">위젯 드래그:</span>
+            <div class="draggable-widget" draggable="true" data-type="map">🗺️ 지도</div>
+            <div class="draggable-widget" draggable="true" data-type="chart">📈 차트</div>
+            <div class="draggable-widget" draggable="true" data-type="codepen">💻 코드펜</div>
+            <div class="draggable-widget" draggable="true" data-type="jsfiddle">⚡ JSFiddle</div>
+            <div class="draggable-widget" draggable="true" data-type="stopwatch">⏱️ 스톱워치</div>
+            <div class="draggable-widget" draggable="true" data-type="timer">⏳ 타이머</div>
+            <div class="draggable-widget" draggable="true" data-type="photopea">🎨 포토피아</div>
+            <div class="draggable-widget" draggable="true" data-type="excalidraw">✏️ 엑스칼리드로우</div>
+            <div class="draggable-widget" draggable="true" data-type="stackblitz">⚡ 스택블리츠</div>
+        </div>
+    </div>
+
+    <div class="workspace layout-4" id="workspace">
+
+        <div class="pane tl">
+            <div class="pane-controls">
+                <button title="새로고침" onclick="refreshPane(this)">🔄</button>
+                <button title="다른 위젯으로 변경" onclick="resetPane(this)">⚙️</button>
+            </div>
+            <div class="url-overlay">
+                <div class="input-group">
+                    <input type="text" placeholder="주소 입력 또는 위젯 드롭">
+                    <button onclick="loadUrl(this)">불러오기</button>
+                </div>
+                <p class="drop-hint">여기로 위젯을 끌어다 놓으세요</p>
+            </div>
+            <iframe></iframe>
+        </div>
+
+        <div class="pane tr">
+            <div class="pane-controls">
+                <button title="새로고침" onclick="refreshPane(this)">🔄</button>
+                <button title="다른 위젯으로 변경" onclick="resetPane(this)">⚙️</button>
+            </div>
+            <div class="url-overlay">
+                <div class="input-group">
+                    <input type="text" placeholder="주소 입력 또는 위젯 드롭">
+                    <button onclick="loadUrl(this)">불러오기</button>
+                </div>
+                <p class="drop-hint">여기로 위젯을 끌어다 놓으세요</p>
+            </div>
+            <iframe></iframe>
+        </div>
+
+        <div class="pane bl">
+            <div class="pane-controls">
+                <button title="새로고침" onclick="refreshPane(this)">🔄</button>
+                <button title="다른 위젯으로 변경" onclick="resetPane(this)">⚙️</button>
+            </div>
+            <div class="url-overlay">
+                <div class="input-group">
+                    <input type="text" placeholder="주소 입력 또는 위젯 드롭">
+                    <button onclick="loadUrl(this)">불러오기</button>
+                </div>
+                <p class="drop-hint">여기로 위젯을 끌어다 놓으세요</p>
+            </div>
+            <iframe></iframe>
+        </div>
+
+        <div class="pane br">
+            <div class="pane-controls">
+                <button title="새로고침" onclick="refreshPane(this)">🔄</button>
+                <button title="다른 위젯으로 변경" onclick="resetPane(this)">⚙️</button>
+            </div>
+            <div class="url-overlay">
+                <div class="input-group">
+                    <input type="text" placeholder="주소 입력 또는 위젯 드롭">
+                    <button onclick="loadUrl(this)">불러오기</button>
+                </div>
+                <p class="drop-hint">여기로 위젯을 끌어다 놓으세요</p>
+            </div>
+            <iframe></iframe>
+        </div>
+
         <div class="resizer resizer-v" id="resizer-v"></div>
         <div class="resizer resizer-h" id="resizer-h"></div>
         <div class="resizer resizer-center" id="resizer-center"></div>
@@ -21,4 +102,5 @@
 
     <script src="wt.js"></script>
 </body>
+
 </html>
