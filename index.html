@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>워크쓰루 - 4분할 화면</title>
+    <link rel="stylesheet" href="wt.css">
+</head>
+<body>
+    <div class="workspace" id="workspace">
+        <!-- 4개의 화면 -->
+        <div class="pane tl"><iframe src="https://www.openstreetmap.org/export/embed.html?bbox=126.96%2C37.55%2C126.99%2C37.58&layer=mapnik" title="YouTube Playlist"></iframe></div>
+        <div class="pane tr"><iframe src="https://s.tradingview.com/widgetembed/?symbol=NASDAQ%3AAAPL" title="Top Right"></iframe></div>
+        <div class="pane bl"><iframe src="https://www.youtube.com/embed/3kUFNhXF9SU?si=JJKDZLQNAp8DzvCJ" title="Bottom Left"></iframe></div>
+        <div class="pane br"><iframe src="https://example.com" title="Bottom Right"></iframe></div>
+
+        <!-- 크기 조절 바 -->
+        <div class="resizer resizer-v" id="resizer-v"></div>
+        <div class="resizer resizer-h" id="resizer-h"></div>
+        <div class="resizer resizer-center" id="resizer-center"></div>
+    </div>
+
+    <script src="wt.js"></script>
+</body>
+</html>
