@@ -1,6 +1,15 @@
-/* 기본 리셋 */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+/* ==========================================
+   1. 기본 리셋 및 루트 설정
+========================================== */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+body { 
+    overflow: hidden; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
 
 /* 클릭(잡는) 영역은 12px로 넉넉하게 설정 */
 :root { 
@@ -9,73 +18,170 @@ body { overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-
     --rs: 12px; 
 }
 
-/* 상단 컨트롤 바 및 독(Dock) 스타일 */
+/* ==========================================
+   2. 상단 통합 컨트롤 바 및 내장 위젯 컨테이너 스타일
+========================================== */
 .controls {
-    height: 50px; background-color: #ffffff; border-bottom: 1px solid #dcdde1;
-    display: flex; align-items: center; padding: 0 20px; gap: 10px;
+    height: 50px; 
+    background-color: #ffffff; 
+    border-bottom: 1px solid #dcdde1;
+    display: flex; 
+    align-items: center; 
+    padding: 0 20px; 
+    gap: 10px;
 }
-.logo { font-weight: bold; margin-right: 20px; color: #2f3640; }
-.layout-buttons { display: flex; gap: 8px; }
+.logo { 
+    font-weight: bold; 
+    color: #2f3640; 
+    white-space: nowrap;
+}
+.layout-buttons { 
+    display: flex; 
+    gap: 8px; 
+    white-space: nowrap;
+}
 .controls button {
-    padding: 6px 12px; background-color: #f5f6fa; border: 1px solid #dcdde1;
-    border-radius: 4px; cursor: pointer; font-size: 14px;
+    padding: 6px 12px; 
+    background-color: #f5f6fa; 
+    border: 1px solid #dcdde1;
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-size: 14px;
 }
-.controls button:hover { background-color: #e84118; color: white; border-color: #e84118; }
-.divider { width: 1px; height: 30px; background-color: #dcdde1; margin: 0 10px; }
+.controls button:hover { 
+    background-color: #e84118; 
+    color: white; 
+    border-color: #e84118; 
+}
+.divider { 
+    width: 1px; 
+    height: 30px; 
+    background-color: #dcdde1; 
+    margin: 0 5px; 
+    flex-shrink: 0;
+}
 
-/* 위젯 드래그 메뉴 */
-.widget-dock { display: flex; align-items: center; gap: 10px; }
-.dock-title { font-size: 13px; font-weight: bold; color: #7f8c8d; }
+/* 버튼 옆에 나열되는 위젯 컨테이너 정의 */
+.widget-container {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    overflow-x: auto;   
+    flex: 1;            
+    padding: 0 5px;
+}
+.widget-container::-webkit-scrollbar {
+    display: none;      
+}
 .draggable-widget {
-    padding: 6px 14px; background-color: #ecf0f1; color: #2c3e50;
-    border: 1px solid #bdc3c7; border-radius: 20px; font-size: 12px;
-    cursor: grab; user-select: none; transition: transform 0.1s, background-color 0.2s;
+    padding: 5px 12px; 
+    background-color: #ecf0f1; 
+    color: #2c3e50;
+    border: 1px solid #bdc3c7; 
+    border-radius: 20px; 
+    font-size: 12px;
+    cursor: grab; 
+    user-select: none; 
+    white-space: nowrap;
+    flex-shrink: 0;     
+    transition: transform 0.1s, background-color 0.2s;
 }
-.draggable-widget:hover { background-color: #dfe4ea; transform: translateY(-1px); }
-.draggable-widget:active { cursor: grabbing; transform: translateY(0); }
+.draggable-widget:hover { 
+    background-color: #dfe4ea; 
+    transform: translateY(-1px); 
+}
+.draggable-widget:active { 
+    cursor: grabbing; 
+    transform: translateY(0); 
+}
 
-/* 작업 공간 Grid 세팅 */
+/* ==========================================
+   3. 작업 공간 Grid & 4분할 기본 레이아웃 배치
+========================================== */
 .workspace {
-    display: grid; width: 100vw; height: calc(100vh - 50px); background-color: #2c3e50;
+    display: grid; 
+    width: 100vw; 
+    height: calc(100vh - 50px); 
+    background-color: #2c3e50;
     grid-template-columns: calc(var(--x) - var(--rs) / 2) var(--rs) calc(100% - var(--x) - var(--rs) / 2);
     grid-template-rows: calc(var(--y) - var(--rs) / 2) var(--rs) calc(100% - var(--y) - var(--rs) / 2);
 }
-.pane { background-color: #f5f6fa; position: relative; overflow: hidden; transition: border 0.2s; }
-.pane iframe { width: 100%; height: 100%; border: none; }
+.pane { 
+    background-color: #f5f6fa; 
+    position: relative; 
+    overflow: hidden; 
+    transition: border 0.2s; 
+}
+.pane iframe { 
+    width: 100%; 
+    height: 100%; 
+    border: none; 
+}
 
-/* 4분할 기본 배치 & 레이아웃 전환 */
-.tl { grid-area: 1 / 1 / 2 / 2; } .tr { grid-area: 1 / 3 / 2 / 4; }
-.bl { grid-area: 3 / 1 / 4 / 2; } .br { grid-area: 3 / 3 / 4 / 4; }
-.layout-2 .bl, .layout-2 .br, .layout-2 .resizer-h, .layout-2 .resizer-center { display: none; }
-.layout-2 .tl { grid-area: 1 / 1 / 4 / 2; } .layout-2 .tr { grid-area: 1 / 3 / 4 / 4; }
+/* 4분할 기본 레이아웃 */
+.tl { grid-area: 1 / 1 / 2 / 2; } 
+.tr { grid-area: 1 / 3 / 2 / 4; }
+.bl { grid-area: 3 / 1 / 4 / 2; } 
+.br { grid-area: 3 / 3 / 4 / 4; }
+
+/* 3분할 레이아웃 */
 .layout-3 .bl { display: none; }
-.layout-3 .tl { grid-area: 1 / 1 / 4 / 2; } .layout-3 .resizer-h { grid-area: 2 / 3 / 3 / 4; }
+.layout-3 .tl { grid-area: 1 / 1 / 4 / 2; } 
+.layout-3 .resizer-h { grid-area: 2 / 3 / 3 / 4; }
 
-/* 크기 조절 선 (투명 배경 + ::after로 2px 얇은 선 그리기) */
+/* ==========================================
+   4. 크기 조절 선 (Resizers) 스타일
+========================================== */
 .resizer-v { 
-    grid-area: 1 / 2 / 4 / 3; cursor: col-resize; 
-    background-color: transparent; position: relative; z-index: 10; 
+    grid-area: 1 / 2 / 4 / 3; 
+    cursor: col-resize; 
+    background-color: transparent; 
+    position: relative; 
+    z-index: 10; 
 }
 .resizer-v::after {
-    content: ''; position: absolute; top: 0; bottom: 0; left: 50%; 
-    transform: translateX(-50%); width: 2px; background-color: #ffffff;
+    content: ''; 
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 2px; 
+    background-color: #ffffff;
 }
 
 .resizer-h { 
-    grid-area: 2 / 1 / 3 / 4; cursor: row-resize; 
-    background-color: transparent; position: relative; z-index: 10; 
+    grid-area: 2 / 1 / 3 / 4; 
+    cursor: row-resize; 
+    background-color: transparent; 
+    position: relative; 
+    z-index: 10; 
 }
 .resizer-h::after {
-    content: ''; position: absolute; left: 0; right: 0; top: 50%; 
-    transform: translateY(-50%); height: 2px; background-color: #ffffff;
+    content: ''; 
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    height: 2px; 
+    background-color: #ffffff;
 }
 
 .resizer-center { 
-    grid-area: 2 / 2 / 3 / 3; cursor: move; background-color: #e84118; 
-    z-index: 20; border-radius: 50%; transform: scale(1.2); 
+    grid-area: 2 / 2 / 3 / 3; 
+    cursor: move; 
+    background-color: #e84118; 
+    z-index: 20; 
+    border-radius: 50%; 
+    transform: scale(1.2); 
+    transition: transform 0.1s;
+}
+.resizer-center:hover {
+    transform: scale(1.4);
 }
 
-/* iframe 방해 차단 및 텍스트 선택 방지 (크기조절 & 드래그 중) */
+/* 드래그 및 리사이징 중 iframe 마우스 간섭 방지 */
 .workspace.is-dragging, 
 .workspace.is-dragging-widget {
     user-select: none;
@@ -85,35 +191,305 @@ body { overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-
     pointer-events: none; 
 }
 
-/* URL 입력 오버레이 */
+/* ==========================================
+   5. URL 입력 오버레이 & 드롭 UI 피드백
+========================================== */
 .url-overlay {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
     background-color: rgba(255, 255, 255, 0.95);
-    display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    z-index: 5;
 }
-.input-group { display: flex; gap: 8px; width: 80%; }
-.input-group input { flex: 1; padding: 10px 15px; border: 1px solid #bdc3c7; border-radius: 6px; outline: none; }
-.input-group button { padding: 10px 20px; background-color: #27ae60; color: white; border: none; border-radius: 6px; cursor: pointer; }
-
-/* 드래그 앤 드롭 UI 피드백 */
-.drop-hint { margin-top: 15px; font-size: 13px; color: #95a5a6; pointer-events: none; }
+.input-group { 
+    display: flex; 
+    gap: 8px; 
+    width: 80%; 
+}
+.input-group input { 
+    flex: 1; 
+    padding: 10px 15px; 
+    border: 1px solid #bdc3c7; 
+    border-radius: 6px; 
+    outline: none; 
+}
+.input-group button { 
+    padding: 10px 20px; 
+    background-color: #27ae60; 
+    color: white; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+}
+.drop-hint { 
+    margin-top: 15px; 
+    font-size: 13px; 
+    color: #95a5a6; 
+    pointer-events: none; 
+}
 .pane.drag-over::after {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(41, 128, 185, 0.1); border: 3px dashed #3498db;
-    z-index: 20; pointer-events: none;
+    content: ''; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    background-color: rgba(41, 128, 185, 0.15); 
+    border: 3px dashed #3498db;
+    z-index: 20; 
+    pointer-events: none;
 }
 
-/* 🔥 개별 화면 컨트롤 바 (새로고침, 초기화) */
+/* 개별 화면 컨트롤 바 (새로고침, 초기화) */
 .pane-controls {
-    position: absolute; top: 10px; right: 10px;
-    display: flex; gap: 6px; z-index: 15;
-    opacity: 0; /* 평소에는 숨김 */
+    position: absolute; 
+    top: 10px; 
+    right: 10px;
+    display: flex; 
+    gap: 6px; 
+    z-index: 15;
+    opacity: 0; 
     transition: opacity 0.2s ease-in-out;
 }
-.pane:hover .pane-controls { opacity: 1; /* 마우스를 올리면 나타남 */ }
-.pane-controls button {
-    background-color: rgba(255, 255, 255, 0.85); border: 1px solid #bdc3c7;
-    border-radius: 6px; padding: 6px 8px; cursor: pointer;
-    font-size: 14px; backdrop-filter: blur(2px); transition: background-color 0.2s;
+.pane:hover .pane-controls { 
+    opacity: 1; 
 }
-.pane-controls button:hover { background-color: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.pane-controls button {
+    background-color: rgba(255, 255, 255, 0.85); 
+    border: 1px solid #bdc3c7;
+    border-radius: 6px; 
+    padding: 6px 8px; 
+    cursor: pointer;
+    font-size: 14px; 
+    backdrop-filter: blur(2px); 
+    transition: background-color 0.2s;
+}
+.pane-controls button:hover { 
+    background-color: #ffffff; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+
+/* ==========================================
+   6. 2분할 버튼용 직관적인 X축 / Y축 선택 팝업창
+========================================== */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    min-width: 220px;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.15);
+    border: 1px solid #dcdde1;
+    border-radius: 8px;
+    z-index: 100;
+    padding: 12px;
+}
+.dropdown-menu.show {
+    display: block;
+}
+.dropdown-title {
+    font-size: 11px;
+    font-weight: bold;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+.axis-btn-group {
+    display: flex;
+    gap: 8px;
+}
+.axis-btn-group button {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 4px !important;
+    background-color: #f5f6fa !important;
+    border: 1px solid #dcdde1 !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    color: #2c3e50 !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.axis-btn-group button:hover {
+    background-color: #e84118 !important;
+    color: #ffffff !important;
+    border-color: #e84118 !important;
+}
+
+/* X축, Y축 그래픽 아이콘 메인 */
+.axis-icon {
+    display: block;
+    width: 32px;
+    height: 24px;
+    border: 1px dashed #7f8c8d;
+    position: relative;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 3px;
+}
+/* X축 아이콘 */
+.axis-icon.axis-x::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background-color: #2c3e50;
+    transform: translateY(-50%);
+}
+/* Y축 아이콘 */
+.axis-icon.axis-y::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background-color: #2c3e50;
+    transform: translateX(-50%);
+}
+.axis-btn-group button:hover .axis-icon::after {
+    background-color: #ffffff;
+}
+
+/* ==========================================
+   7. 💥 신규 추가: 단축키 가이드 메뉴판 전용 스타일
+========================================== */
+.shortcut-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 5px;
+}
+.shortcut-help-btn {
+    font-weight: 500;
+    color: #4b5563;
+}
+.shortcut-help-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background-color: #ffffff;
+    width: 280px;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.15);
+    border: 1px solid #dcdde1;
+    border-radius: 8px;
+    z-index: 110;
+    padding: 14px;
+}
+.shortcut-help-menu.show {
+    display: block;
+}
+.shortcut-list {
+    list-style: none;
+    margin: 5px 0 0 0;
+    padding: 0;
+}
+.shortcut-list li {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #4b5563;
+    padding: 6px 0;
+    border-bottom: 1px dashed #f3f4f6;
+}
+.shortcut-list li:last-child {
+    border-bottom: none;
+}
+.shortcut-list li span:last-child {
+    margin-left: auto; /* 설명을 우측으로 정렬 */
+    color: #1f2937;
+    font-weight: 500;
+}
+
+/* 키보드 키 스타일 모양 (<kbd>) */
+.kbd {
+    background-color: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-family: monospace;
+    font-size: 10px;
+    font-weight: bold;
+    color: #374151;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+
+/* ==========================================
+   8. 신규 2분할 레이아웃 Grid 세팅
+========================================== */
+.layout-2-v .bl, .layout-2-v .br, .layout-2-v .resizer-h, .layout-2-v .resizer-center { display: none; }
+.layout-2-v .tl { grid-area: 1 / 1 / 4 / 2; } 
+.layout-2-v .tr { grid-area: 1 / 3 / 4 / 4; }
+.layout-2-v .resizer-v { grid-area: 1 / 2 / 4 / 3; display: block !important; }
+
+.layout-2-h .tr, .layout-2-h .br, .layout-2-h .resizer-v, .layout-2-h .resizer-center { display: none; }
+.layout-2-h .tl { grid-area: 1 / 1 / 2 / 4; } 
+.layout-2-h .bl { grid-area: 3 / 1 / 4 / 4; display: block !important; } 
+.layout-2-h .resizer-h { grid-area: 2 / 1 / 3 / 4; display: block !important; }
+
+.pane.hidden {
+    display: none !important;
+}
+
+/* ==========================================
+   9. 완벽 통합형 다크모드(body.dark-mode) 테마 스타일
+========================================== */
+body.dark-mode { background-color: #1e272e; color: #f5f6fa; }
+body.dark-mode .controls { background-color: #1e272e; border-bottom: 1px solid #3d4852; }
+body.dark-mode .logo { color: #f5f6fa; }
+body.dark-mode .divider { background-color: #3d4852; }
+body.dark-mode .controls button { background-color: #2f3640; color: #f5f6fa; border-color: #3d4852; }
+body.dark-mode .controls button:hover { background-color: #e84118; color: white; border-color: #e84118; }
+body.dark-mode .draggable-widget { background-color: #2f3640; color: #f5f6fa; border-color: #3d4852; }
+body.dark-mode .draggable-widget:hover { background-color: #3d4852; }
+body.dark-mode .workspace { background-color: #1e272e; }
+body.dark-mode .pane { background-color: #2f3640; }
+body.dark-mode .url-overlay { background-color: rgba(47, 54, 64, 0.95); }
+body.dark-mode .input-group input { background-color: #1e272e; color: #f5f6fa; border-color: #3d4852; }
+body.dark-mode .input-group input::placeholder { color: #7f8c8d; }
+body.dark-mode .drop-hint { color: #bdc3c7; }
+body.dark-mode .pane-controls button { background-color: rgba(47, 54, 64, 0.85); border-color: #3d4852; color: #f5f6fa; }
+body.dark-mode .pane-controls button:hover { background-color: #3d4852; }
+body.dark-mode .dropdown-menu { background-color: #2f3640; border-color: #3d4852; box-shadow: 0px 10px 25px rgba(0,0,0,0.4); }
+body.dark-mode .axis-btn-group button { background-color: #1e272e !important; border-color: #3d4852 !important; color: #f5f6fa !important; }
+body.dark-mode .axis-btn-group button:hover { background-color: #e84118 !important; color: #ffffff !important; border-color: #e84118 !important; }
+body.dark-mode .axis-icon { background-color: rgba(0,0,0,0.2); }
+
+/* 다크모드 하의 단축키 가이드 메뉴 테마 추가 */
+body.dark-mode .shortcut-help-menu { background-color: #2f3640; border-color: #3d4852; box-shadow: 0px 10px 25px rgba(0,0,0,0.4); }
+body.dark-mode .shortcut-list li { color: #bdc3c7; border-bottom: 1px dashed #3d4852; }
+body.dark-mode .shortcut-list li span:last-child { color: #f5f6fa; }
+body.dark-mode .kbd { background-color: #1e272e; border-color: #4b5563; color: #f5f6fa; box-shadow: 0 1px 0 rgba(255,255,255,0.1); }
+
+.dark-toggle-btn {
+    margin-left: auto; 
+    cursor: pointer;
+    font-size: 18px;
+    padding: 6px 10px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+.dark-toggle-btn:hover { background-color: #f5f6fa; }
+body.dark-mode .dark-toggle-btn:hover { background-color: #3d4852; }
