@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workspace Splitter</title>
+    <link rel="stylesheet" href="wt.css">
+</head>
+
+<body>
+
+    <header class="controls">
+        <div class="logo">
+            <img src="WorkThrough (1).png" alt="WorkThrough Logo Icon" class="logo-img">
+            <span class="logo-text">WorkThrough</span>
+        </div>
+        <div class="user-status" style="margin-left: 10px; font-size: 13px; color: #4b5563;">
+            <span id="user-display-name">사용자</span>님 
+            <button onclick="handleLogout()" style="padding: 2px 6px; font-size: 11px; margin-left: 5px; cursor: pointer;">로그아웃</button>
+        </div>
+        <div class="divider"></div>
+
+        <div class="layout-buttons">
+            <div class="dropdown-container">
+                <button onclick="toggleDropdown(event)" class="dropdown-btn">2분할 ▾</button>
+                <div class="dropdown-menu" id="dropdown-2pane">
+                    <div class="dropdown-title">분할 축 선택</div>
+                    <div class="axis-btn-group">
+                        <button onclick="changeLayout('layout-2-h')" title="X축 가로 경계선 (상하 분할)"><span class="axis-icon axis-x"></span>X축 화면</button>
+                        <button onclick="changeLayout('layout-2-v')" title="Y축 세로 경계선 (좌우 분할)"><span class="axis-icon axis-y"></span>Y축 화면</button>
+                    </div>
+                </div>
+            </div>
+            <button onclick="changeLayout('layout-3')">3분할</button>
+            <button onclick="changeLayout('layout-4')">4분할</button>
+        </div>
+        
+        <div class="divider"></div>
+
+        <div class="widget-container" id="widget-container">
+            <div class="draggable-widget" draggable="true" data-type="map">🗺️ 지도</div>
+            <div class="draggable-widget" draggable="true" data-type="chart">📈 주식 차트</div>
+            <div class="draggable-widget" draggable="true" data-type="excalidraw">🎨 화이트보드</div>
+            <div class="draggable-widget" draggable="true" data-type="photopea">📷 포토샵</div>
+            <div class="draggable-widget" draggable="true" data-type="codepen">💻 CodePen</div>
+            <div class="draggable-widget" draggable="true" data-type="jsfiddle">⚡ JSFiddle</div>
+            <div class="draggable-widget" draggable="true" data-type="stackblitz">🚀 StackBlitz</div>
+            <div class="draggable-widget" draggable="true" data-type="stopwatch">⏱️ 기본 스톱워치</div>
+            <div class="draggable-widget" draggable="true" data-type="timer">⏳ 기본 타이머</div>
+            <div class="draggable-widget" draggable="true" data-type="custom-stopwatch">⏱️ 맞춤 스톱워치</div>
+            <div class="draggable-widget" draggable="true" data-type="custom-timer">⏳ 맞춤 타이머</div>
+        </div>
+
+        <div class="shortcut-container">
+            <button onclick="toggleWidgetDock()" title="위젯 바 숨기기/보이기" style="margin-right: 5px;">🔼 위젯바</button>
+            <button onclick="toggleShortcutHelp(event)" class="shortcut-help-btn" title="단축키 가이드 보기">⌨️ 단축키 안내</button>
+            <div class="shortcut-help-menu" id="shortcut-help-menu">
+                <div class="dropdown-title">전역 조작 단축키</div>
+                <ul class="shortcut-list">
+                    <li><span class="kbd">Ctrl</span>+<span class="kbd">1</span> <span>세로 2분할</span></li>
+                    <li><span class="kbd">Ctrl</span>+<span class="kbd">2</span> <span>기본 3분할</span></li>
+                    <li><span class="kbd">Ctrl</span>+<span class="kbd">3</span> <span>전체 4분할</span></li>
+                    <li><span class="kbd">Ctrl</span>+<span class="kbd">R</span> <span>마우스 위치 창 새로고침</span></li>
+                    <li><span class="kbd">Esc</span> <span>마우스 위치 창 주소 초기화</span></li>
+                    <li><span class="kbd">Ctrl</span>+<span class="kbd">Space</span> <span>컨트롤바 축소</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="theme-picker" title="워크스페이스 테마 색상 변경">
+            <input type="color" id="theme-color-picker" value="#3b82f6" onchange="updateThemeColor(this.value)">
+        </div>
+    </header>
+
+    <main class="workspace layout-4" id="workspace">
+
+        <div class="pane tl">
+            <div class="pane-header" draggable="true" title="드래그하여 다른 화면과 위치 교환">
+                <div class="pane-title" contenteditable="true" spellcheck="false">화면 1</div>
+                <div class="pane-controls">
+                    <button onclick="openPip(this)" title="새 창(PIP)으로 열기">↗️</button>
+                    <button onclick="refreshPane(this)" title="새로고침">🔄</button>
+                    <button onclick="resetPane(this)" title="주소 초기화">⚙️</button>
+                </div>
+            </div>
+            <iframe src="about:blank" frameborder="0"></iframe>
+            <div class="custom-widget-holder"></div>
+            <div class="url-overlay">
+                <div class="input-group">
+                    <input type="text" placeholder="URL 주소를 입력하거나 위젯을 드래그하세요">
+                    <button onclick="loadUrl(this)">불러오기</button>
+                </div>
+                <div class="drop-hint">여기에 위젯을 드롭하세요</div>
+            </div>
+        </div>
+
+        <div class="pane tr">
+            <div class="pane-header" draggable="true" title="드래그하여 다른 화면과 위치 교환">
+                <div class="pane-title" contenteditable="true" spellcheck="false">화면 2</div>
+                <div class="pane-controls">
+                    <button onclick="openPip(this)" title="새 창(PIP)으로 열기">↗️</button>
+                    <button onclick="refreshPane(this)" title="새로고침">🔄</button>
+                    <button onclick="resetPane(this)" title="주소 초기화">⚙️</button>
+                </div>
+            </div>
+            <iframe src="about:blank" frameborder="0"></iframe>
+            <div class="custom-widget-holder"></div>
+            <div class="url-overlay">
+                <div class="input-group">
+                    <input type="text" placeholder="URL 주소를 입력하거나 위젯을 드래그하세요">
+                    <button onclick="loadUrl(this)">불러오기</button>
+                </div>
+                <div class="drop-hint">여기에 위젯을 드롭하세요</div>
+            </div>
+        </div>
+
+        <div class="pane bl">
+            <div class="pane-header" draggable="true" title="드래그하여 다른 화면과 위치 교환">
+                <div class="pane-title" contenteditable="true" spellcheck="false">화면 3</div>
+                <div class="pane-controls">
+                    <button onclick="openPip(this)" title="새 창(PIP)으로 열기">↗️</button>
+                    <button onclick="refreshPane(this)" title="새로고침">🔄</button>
+                    <button onclick="resetPane(this)" title="주소 초기화">⚙️</button>
+                </div>
+            </div>
+            <iframe src="about:blank" frameborder="0"></iframe>
+            <div class="custom-widget-holder"></div>
+            <div class="url-overlay">
+                <div class="input-group">
+                    <input type="text" placeholder="URL 주소를 입력하거나 위젯을 드래그하세요">
+                    <button onclick="loadUrl(this)">불러오기</button>
+                </div>
+                <div class="drop-hint">여기에 위젯을 드롭하세요</div>
+            </div>
+        </div>
+
+        <div class="pane br">
+            <div class="pane-header" draggable="true" title="드래그하여 다른 화면과 위치 교환">
+                <div class="pane-title" contenteditable="true" spellcheck="false">화면 4</div>
+                <div class="pane-controls">
+                    <button onclick="openPip(this)" title="새 창(PIP)으로 열기">↗️</button>
+                    <button onclick="refreshPane(this)" title="새로고침">🔄</button>
+                    <button onclick="resetPane(this)" title="주소 초기화">⚙️</button>
+                </div>
+            </div>
+            <iframe src="about:blank" frameborder="0"></iframe>
+            <div class="custom-widget-holder"></div>
+            <div class="url-overlay">
+                <div class="input-group">
+                    <input type="text" placeholder="URL 주소를 입력하거나 위젯을 드래그하세요">
+                    <button onclick="loadUrl(this)">불러오기</button>
+                </div>
+                <div class="drop-hint">여기에 위젯을 드롭하세요</div>
+            </div>
+        </div>
+
+        <div class="resizer-v" id="resizer-v" title="더블클릭 시 세로 비율 초기화"></div>
+        <div class="resizer-h" id="resizer-h" title="더블클릭 시 가로 비율 초기화"></div>
+        <div class="resizer-center" id="resizer-center" title="더블클릭 시 전체 비율 초기화"></div>
+    </main>
+
+    <script src="wt.js"></script>
+</body>
+
+</html>
