@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function handleLogout() {
     alert("로그아웃 되었습니다.");
     sessionStorage.clear();
-    location.href = 'wtLogin.html';
+    location.href = 'index.html';
 }
 
 function saveWorkspaceState() {
