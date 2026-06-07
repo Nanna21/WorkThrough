@@ -578,3 +578,11 @@ function initThemePicker() {
         if (picker) picker.value = savedColor;
     }
 }
+
+/* ==========================================
+   13. 워크스페이스 완전 초기화 (로고 클릭 시)
+========================================== */
+function resetWorkspace() {
+    localStorage.removeItem('workspaceState'); // 저장된 기존 창 기록 삭제
+    location.reload(); // 새로고침
+}

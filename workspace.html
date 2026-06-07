@@ -11,13 +11,17 @@
 <body>
 
     <header class="controls">
-        <div class="logo">
+        
+
+        <div class="logo" onclick="resetWorkspace()" style="cursor: pointer;" title="클릭 시 전체 초기화">
             <img src="WorkThrough (1).png" alt="WorkThrough Logo Icon" class="logo-img">
             <span class="logo-text">WorkThrough</span>
         </div>
+
         <div class="user-status" style="margin-left: 10px; font-size: 13px; color: #4b5563;">
-            <span id="user-display-name">사용자</span>님 
-            <button onclick="handleLogout()" style="padding: 2px 6px; font-size: 11px; margin-left: 5px; cursor: pointer;">로그아웃</button>
+            <span id="user-display-name">사용자</span>님
+            <button onclick="handleLogout()"
+                style="padding: 2px 6px; font-size: 11px; margin-left: 5px; cursor: pointer;">로그아웃</button>
         </div>
         <div class="divider"></div>
 
@@ -27,15 +31,17 @@
                 <div class="dropdown-menu" id="dropdown-2pane">
                     <div class="dropdown-title">분할 축 선택</div>
                     <div class="axis-btn-group">
-                        <button onclick="changeLayout('layout-2-h')" title="X축 가로 경계선 (상하 분할)"><span class="axis-icon axis-x"></span>X축 화면</button>
-                        <button onclick="changeLayout('layout-2-v')" title="Y축 세로 경계선 (좌우 분할)"><span class="axis-icon axis-y"></span>Y축 화면</button>
+                        <button onclick="changeLayout('layout-2-h')" title="X축 가로 경계선 (상하 분할)"><span
+                                class="axis-icon axis-x"></span>X축 화면</button>
+                        <button onclick="changeLayout('layout-2-v')" title="Y축 세로 경계선 (좌우 분할)"><span
+                                class="axis-icon axis-y"></span>Y축 화면</button>
                     </div>
                 </div>
             </div>
             <button onclick="changeLayout('layout-3')">3분할</button>
             <button onclick="changeLayout('layout-4')">4분할</button>
         </div>
-        
+
         <div class="divider"></div>
 
         <div class="widget-container" id="widget-container">
